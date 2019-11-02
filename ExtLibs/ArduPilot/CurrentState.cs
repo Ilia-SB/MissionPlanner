@@ -1340,6 +1340,34 @@ namespace MissionPlanner
 
         [DisplayText("RangeFinder3 (cm)")] public uint rangefinder3 { get; set; }
 
+        [GroupText("FishFinder")]
+        [DisplayText("Depth")]
+        public float depth { get; set; }
+
+        [GroupText("FishFinder")]
+        [DisplayText("Water temperature")]
+        public float temperature { get; set; }
+
+        [GroupText("FishFinder")]
+        [DisplayText("Large Fish Depth")]
+        public float large_fish_depth { get; set; }
+
+        [GroupText("FishFinder")]
+        [DisplayText("Medium Fish Depth")]
+        public float medium_fish_depth { get; set; }
+
+        [GroupText("FishFinder")]
+        [DisplayText("Small Fish Depth")]
+        public float small_fish_depth { get; set; }
+
+        [GroupText("FishFinder")]
+        [DisplayText("FishFinder active")]
+        public byte active { get; set; }
+
+        [GroupText("FishFinder")]
+        [DisplayText("Battery level")]
+        public byte battery_level { get; set; }
+
         public float freemem { get; set; }
         public float load { get; set; }
         public float brklevel { get; set; }
@@ -1954,6 +1982,21 @@ namespace MissionPlanner
 
                         sonarrange = sonar.distance;
                         sonarvoltage = sonar.voltage;
+                    }
+
+                        break;
+                    case (uint)MAVLink.MAVLINK_MSG_ID.FISHFINDER:
+
+                    {
+                        var fishfinder = mavLinkMessage.ToStructure<MAVLink.mavlink_fishfinder_t>();
+
+                        depth = fishfinder.depth;
+                        large_fish_depth = fishfinder.large_fish_depth;
+                        medium_fish_depth = fishfinder.medium_fish_depth;
+                        small_fish_depth = fishfinder.small_fish_depth;
+                        active = fishfinder.active;
+                        temperature = fishfinder.temperature;
+                        battery_level = fishfinder.battery_level;
                     }
 
                         break;
